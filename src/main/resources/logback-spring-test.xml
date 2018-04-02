@@ -1,7 +1,7 @@
 <configuration>
 
-    <property name="LOG_HOME" value="logs" />
-    <property name="CONTEXT_NAME" value="cleanpower" />
+    <property name="LOG_HOME" value="/data/service-log-test/simulator-car" />
+    <property name="CONTEXT_NAME" value="simulator-car" />
 
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />

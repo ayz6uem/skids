@@ -96,7 +96,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/CarFactoryTest.java</exclude>
-                        <exclude>**/HikvisionTbox.java</exclude>
+                        <exclude>**/HikvisionTboxTest.java</exclude>
                         <exclude>**/InfoServiceTest.java</exclude>
                     </excludes>
                 </configuration>
