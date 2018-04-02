@@ -1,0 +1,43 @@
+spring:
+  profiles:
+    active: dev
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    prefer-ip-address: true
+    hostname: ${spring.cloud.client.ipAddress}
+---
+
+spring:
+  profiles: dev
+server:
+  port: 9810
+tbox:
+  hikvision:
+    host: 47.100.76.78
+    port: 8610
+    idle: 30
+eureka:
+  client:
+    server-url:
+      defaultzone: http://eureka-dev.test.1byongche.cn/eureka/
+logging:
+  level:
+    root: info
+service:
+  car:
+    uri: http://47.100.76.78:8420
+---
+
+spring:
+  profiles: test
+server:
+  port: 8810
+
+logging:
+  config: classpath:logback-spring-${spring.profiles}.xml
+
+eureka:
+  client:
+    server-url:
+      defaultzone: http://test.1byongche.cn:8310/eureka/
