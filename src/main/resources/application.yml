@@ -22,10 +22,14 @@ service:
     uri: http://47.100.76.78:8420
 ---
 
+logging:
+  config: classpath:logback-spring-${spring.profiles}.xml
+
 spring:
   profiles: test
 server:
   port: 8810
+
 tbox:
   hikvision:
     host: 47.100.76.78
