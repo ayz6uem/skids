@@ -17,12 +17,22 @@ public class CarManage {
 
     Map<String,Car> pool = new ConcurrentHashMap<>();
 
-    public Result<Car> build(CarDTO dto){
+    public Result<Car> active(CarDTO dto){
+        if(pool.containsKey(dto.getInfo().getTboxSimNumber())){
+            throw new IllegalArgumentException("车辆已激活，不允许重复激活");
+        }
         Car car = Car.builder(dto.getInfo().getTboxSimNumber(),dto.getInfo().getCarNumber())
                 .tbox(dto.getInfo().getTboxTypeCode())
                 .status(dto.getStatusInfo())
                 .build();
         pool.put(car.getId(),car);
+        return Result.success(car);
+    }
+
+    public Result unactive(String id){
+        Car car = get(id);
+        car.off();
+        pool.remove(id);
         return Result.success(car);
     }
 

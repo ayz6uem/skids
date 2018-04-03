@@ -27,13 +27,19 @@ public class CarController {
     public Result active(String carSn){
         Result<CarDTO> infoResult = infoService.get(carSn);
         if(infoResult.isOk()){
-            Result<Car> carResult = carManage.build(infoResult.getData());
+            Result<Car> carResult = carManage.active(infoResult.getData());
             if(carResult.isOk()){
                 carManage.on(carResult.getData());
             }
             return carResult;
         }
         return Result.fail(infoResult.getMsg());
+    }
+
+    @GetMapping("/{id}/unactive")
+    public Result unactive(@PathVariable String id){
+        carManage.unactive(id);
+        return Result.success();
     }
 
     @GetMapping
