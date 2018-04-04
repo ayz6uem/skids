@@ -17,6 +17,10 @@ tbox:
     host: 47.100.76.78
     port: 8610
     idle: 30
+  threadcn:
+    host: 47.100.76.78
+    port: 8620
+    idle: 30
 service:
   car:
     uri: http://47.100.76.78:8420
@@ -34,6 +38,10 @@ tbox:
   hikvision:
     host: 47.100.76.78
     port: 8610
+    idle: 30
+  threadcn:
+    host: 47.100.76.78
+    port: 8620
     idle: 30
 service:
   car:

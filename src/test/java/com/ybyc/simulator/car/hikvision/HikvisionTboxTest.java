@@ -1,12 +1,13 @@
 package com.ybyc.simulator.car.hikvision;
 
-import com.ybyc.gateway.nettyplus.core.util.XorHelper;
 import com.ybyc.simulator.car.core.Car;
 import com.ybyc.simulator.car.core.Status;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
-import io.netty.buffer.Unpooled;
+import com.ybyc.simulator.car.threadcn.frame.Frame;
+import com.ybyc.simulator.car.threadcn.frame.StatusData;
 import org.junit.Test;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HikvisionTboxTest {
 
@@ -53,6 +54,16 @@ public class HikvisionTboxTest {
             return false;
         }
         return true;
+    }
+
+    @Test
+    public void test3(){
+        StatusData status = new StatusData();
+        Frame frame = new Frame("E3123123123",status);
+        System.out.println(frame);
+
+//        System.out.println(Stream.of(1,2,3).map(Object::toString).collect(Collectors.joining(",")));
+
     }
 
 }

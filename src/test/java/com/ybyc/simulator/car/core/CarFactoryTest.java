@@ -12,7 +12,8 @@ public class CarFactoryTest {
 
     @Test
     public void test1(){
-        Car car = Car.builder("13934437547","豫A11223").tbox("hikvision").build();
+//        Car car = Car.builder("13934437547","豫A11223").tbox("hiktbox").build();
+        Car car = Car.builder("E61720390762","皖AY035B").tbox("srdtbox").build();
 
         Status status = car.getStatus();
         status.setSoc(39);
@@ -23,7 +24,7 @@ public class CarFactoryTest {
         status.setLatitude(34.796625);
         status.setReady(true);
         status.setCharging(false);
-        status.setDoor(true);
+        status.setDoor(false);
         status.setLock(true);
 
         car.on();

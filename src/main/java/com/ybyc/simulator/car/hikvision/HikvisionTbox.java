@@ -51,13 +51,13 @@ public class HikvisionTbox extends BaseTbox {
     @Override
     public boolean on() {
         boot();
-        return false;
+        return true;
     }
 
     @Override
     public boolean off() {
         channel.close();
-        return false;
+        return true;
     }
 
     @Override
@@ -83,15 +83,15 @@ public class HikvisionTbox extends BaseTbox {
 
     }
 
-    public void rent(Frame<Rent> frame) {
+    private void rent(Frame<Rent> frame) {
         ack(car.rent().result(),frame);
     }
 
-    public void repay(Frame<Repay> frame) {
+    private void repay(Frame<Repay> frame) {
         ack(car.repay().result(),frame);
     }
 
-    public void carControl(Frame<CarControl> frame) {
+    private void carControl(Frame<CarControl> frame) {
         boolean result = true;
         CarControl carControl = frame.getPayload();
         if(Objects.equals(carControl.getDoor(),CarControl.DOOR_UNLOCK)){
@@ -108,11 +108,11 @@ public class HikvisionTbox extends BaseTbox {
         ack(result,frame);
     }
 
-    public void setStatus(Frame<SetStatus> frame) {
+    private void setStatus(Frame<SetStatus> frame) {
         ack(true,frame);
     }
 
-    public void ack(boolean success,Frame frame){
+    private void ack(boolean success,Frame frame){
         Ack ack = new Ack();
         ack.setReqXor(frame.getXor());
         ack.setReqDirective(frame.getDirective());
@@ -161,13 +161,11 @@ public class HikvisionTbox extends BaseTbox {
                     ch.pipeline().addLast(new MessageToMessageCodec<Frame,Frame>() {
                         @Override
                         protected void encode(ChannelHandlerContext channelHandlerContext, Frame frame, List<Object> list) throws Exception {
-                            log.info("<--{}", frame);
                             list.add(frame);
                         }
 
                         @Override
                         protected void decode(ChannelHandlerContext channelHandlerContext, Frame frame, List<Object> list) throws Exception {
-                            log.info("-->{}", frame);
                             list.add(frame);
                         }
                     });

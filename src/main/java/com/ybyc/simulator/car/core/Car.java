@@ -155,6 +155,7 @@ public class Car {
             car = new Car();
             car.setId(id);
             car.setCarNumber(carNumber);
+            car.setStatus(new Status());
         }
 
         public CarBuilder tbox(String type){
@@ -171,7 +172,7 @@ public class Car {
 
         public CarBuilder status(StatusInfoDTO statusInfoDTO){
             Assert.notNull(car,"please call init first");
-            Status status = new Status();
+            Status status = car.getStatus();
             status.setSoc(statusInfoDTO.getSoc());
             status.setOdo(statusInfoDTO.getOdo().intValue());
             status.setAcc(Objects.equals(1,statusInfoDTO.getAcc()));
