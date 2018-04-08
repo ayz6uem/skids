@@ -27,9 +27,9 @@ public class CarController {
     public Result active(String carSn){
         Result<CarDTO> infoResult = infoService.get(carSn);
         if(infoResult.isOk()){
-            Result<Car> carResult = carManage.active(infoResult.getData());
+            Result<Car> carResult = carManage.build(infoResult.getData());
             if(carResult.isOk()){
-                carManage.on(carResult.getData());
+                carManage.active(carResult.getData());
             }
             return carResult;
         }
@@ -56,8 +56,7 @@ public class CarController {
 
     @PostMapping
     public Result update(@RequestBody StatusDTO statusDTO){
-        Car car = carManage.get(statusDTO.getId());
-        car.setStatus(BeanHelper.map(statusDTO, Status.class));
+        Car car = carManage.updateStatus(statusDTO);
         return Result.success(car);
     }
 

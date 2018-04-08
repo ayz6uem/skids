@@ -5,6 +5,8 @@ import com.ybyc.simulator.car.common.helper.Result;
 import com.ybyc.simulator.car.info.dto.StatusInfoDTO;
 import lombok.Data;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.util.Assert;
 
 import java.util.Objects;
@@ -15,6 +17,7 @@ public class Car {
     /**
      * tbox sim number 作为车的主键
      */
+    @Id
     private String id;
     /**
      * 车牌号
@@ -27,6 +30,7 @@ public class Car {
 
     private Status status;
 
+    @Transient
     private BaseTbox tbox;
 
     /**
@@ -144,6 +148,16 @@ public class Car {
         return new CarBuilder(id,carNumber);
     }
 
+    public void tbox(String type){
+        try{
+            TboxFactory tboxFactory = ApplicationContextHolder.getBean(String.format("%sFactory",type),TboxFactory.class);
+            setTbox(tboxFactory.build(this));
+            setType(type);
+        }catch (NoSuchBeanDefinitionException e){
+            throw new IllegalArgumentException("设备类型不支持:"+type);
+        }
+    }
+
     /**
      * 车辆构建类
      */
@@ -158,15 +172,13 @@ public class Car {
             car.setStatus(new Status());
         }
 
+        public CarBuilder(Car car){
+            this.car = car;
+        }
+
         public CarBuilder tbox(String type){
             Assert.notNull(car,"please call init first");
-            try{
-                car.setType(type);
-                TboxFactory tboxFactory = ApplicationContextHolder.getBean(String.format("%sFactory",car.getType()),TboxFactory.class);
-                car.setTbox(tboxFactory.build(car));
-            }catch (NoSuchBeanDefinitionException e){
-                throw new IllegalArgumentException("设备类型不支持:"+car.getType());
-            }
+            car.tbox(type);
             return this;
         }
 
@@ -183,6 +195,12 @@ public class Car {
             status.setCharging(false);
             status.setDoor(false);
             status.setLock(true);
+            car.setStatus(status);
+            return this;
+        }
+
+        public CarBuilder status(Status status){
+            Assert.notNull(car,"please call init first");
             car.setStatus(status);
             return this;
         }

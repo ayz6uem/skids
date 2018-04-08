@@ -10,6 +10,9 @@ eureka:
 
 spring:
   profiles: dev
+  data:
+    mongodb:
+      uri: mongodb://test.1byongche.cn:27017/simulator-car
 server:
   port: 9810
 tbox:
@@ -24,16 +27,18 @@ tbox:
 service:
   car:
     uri: http://47.100.76.78:8420
+
 ---
 
 logging:
   config: classpath:logback-spring-${spring.profiles}.xml
-
 spring:
   profiles: test
+  data:
+    mongodb:
+      uri: mongodb://test.1byongche.cn:27017/simulator-car
 server:
   port: 8810
-
 tbox:
   hikvision:
     host: 47.100.76.78

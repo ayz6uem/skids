@@ -6,6 +6,8 @@ import com.ybyc.simulator.car.threadcn.frame.Frame;
 import com.ybyc.simulator.car.threadcn.frame.StatusData;
 import org.junit.Test;
 
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,11 +60,19 @@ public class HikvisionTboxTest {
 
     @Test
     public void test3(){
-        StatusData status = new StatusData();
-        Frame frame = new Frame("E3123123123",status);
-        System.out.println(frame);
+//        StatusData status = new StatusData();
+//        Frame frame = new Frame("E3123123123",status);
+//        System.out.println(frame);
 
 //        System.out.println(Stream.of(1,2,3).map(Object::toString).collect(Collectors.joining(",")));
+
+//        List<String> list = ["item"];
+//
+//        Map<String,String> map = {"k":"1"};
+
+//        int i = 100_100_100;
+//
+//        int a = 0b1001_1001;
 
     }
 
