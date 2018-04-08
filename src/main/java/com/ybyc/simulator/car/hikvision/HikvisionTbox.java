@@ -62,6 +62,9 @@ public class HikvisionTbox extends BaseTbox {
 
     @Override
     public void pushStatus() {
+        if(Objects.isNull(channel)){
+            return;
+        }
 
         StatusData statusData = new StatusData();
         statusData.setPreStatus(STATUS_RENTABLE);
