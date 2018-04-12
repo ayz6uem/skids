@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/car/info")
+@RequestMapping("/api/car/info")
 public class CarController {
 
     @Autowired
