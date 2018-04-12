@@ -4,6 +4,7 @@ import com.ybyc.gateway.nettyplus.core.codec.DirectiveCodec;
 import com.ybyc.gateway.nettyplus.core.codec.LengthFieldBasedFrameEncoder;
 import com.ybyc.gateway.nettyplus.core.codec.XorChecker;
 import com.ybyc.gateway.nettyplus.core.handler.GenericObjectChannelInboundHandler;
+import com.ybyc.simulator.car.common.location.Location;
 import com.ybyc.simulator.car.core.BaseTbox;
 import com.ybyc.simulator.car.core.Car;
 import com.ybyc.simulator.car.hikvision.frame.*;
@@ -69,8 +70,12 @@ public class HikvisionTbox extends BaseTbox {
         StatusData statusData = new StatusData();
         statusData.setPreStatus(STATUS_RENTABLE);
         statusData.setStatus(STATUS_RENTABLE);
-        statusData.setLongitude((int)(car.getStatus().getLongitude()*Math.pow(10,6)));
-        statusData.setLatitude((int)(car.getStatus().getLatitude()*Math.pow(10,6)));
+
+        Location.Point point = new Location(car.getStatus().getLongitude(),car.getStatus().getLatitude()).toWgs84();
+
+        statusData.setLongitude((int)(point.lng*Math.pow(10,6)));
+        statusData.setLatitude((int)(point.lat*Math.pow(10,6)));
+
         statusData.setSoc((byte)car.getStatus().getSoc());
         statusData.setCard((byte)-1);
         statusData.setOdo(car.getStatus().getOdo());

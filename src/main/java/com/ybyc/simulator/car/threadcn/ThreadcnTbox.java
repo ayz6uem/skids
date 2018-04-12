@@ -1,6 +1,7 @@
 package com.ybyc.simulator.car.threadcn;
 
 import com.ybyc.simulator.car.common.helper.Result;
+import com.ybyc.simulator.car.common.location.Location;
 import com.ybyc.simulator.car.core.BaseTbox;
 import com.ybyc.simulator.car.core.Car;
 import com.ybyc.simulator.car.threadcn.frame.*;
@@ -53,8 +54,11 @@ public class ThreadcnTbox extends BaseTbox {
         statusData.setSoc(car.getStatus().getSoc());
         statusData.setRemainMileage((int)(car.getStatus().getSoc()*1.5));
         statusData.setCharging(car.getStatus().isCharging()?StatusData.CHARGING:StatusData.UNCHARGING);
-        statusData.setLongitude(car.getStatus().getLongitude());
-        statusData.setLatitude(car.getStatus().getLatitude());
+
+        Location.Point point = new Location(car.getStatus().getLongitude(),car.getStatus().getLatitude()).toWgs84();
+
+        statusData.setLongitude(point.lng);
+        statusData.setLatitude(point.lat);
 
         channel.writeAndFlush(new Frame(car.getId(),statusData).toString());
     }
