@@ -28,38 +28,32 @@ public class ActionController {
 
     @GetMapping("/{id}/open")
     public Result open(@PathVariable String id){
-        carManage.get(id).open();
-        return Result.success();
+        return carManage.get(id).open();
     }
 
     @GetMapping("/{id}/close")
     public Result close(@PathVariable String id){
-        carManage.get(id).close();
-        return Result.success();
+        return carManage.get(id).close();
     }
 
     @GetMapping("/{id}/startup")
     public Result startup(@PathVariable String id){
-        carManage.get(id).startup();
-        return Result.success();
+        return carManage.get(id).startup();
     }
 
     @GetMapping("/{id}/flameout")
     public Result flameout(@PathVariable String id){
-        carManage.get(id).flameout();
-        return Result.success();
+        return carManage.get(id).flameout();
     }
 
     @GetMapping("/{id}/charging")
     public Result charging(@PathVariable String id){
-        carManage.get(id).charging();
-        return Result.success();
+        return carManage.get(id).charging();
     }
 
     @GetMapping("/{id}/uncharging")
     public Result uncharging(@PathVariable String id){
-        carManage.get(id).uncharging();
-        return Result.success();
+        return carManage.get(id).uncharging();
     }
 
     @GetMapping("/{id}/move")
@@ -67,8 +61,7 @@ public class ActionController {
                        @RequestParam(defaultValue = "0") double speed,
                        @RequestParam(defaultValue = "-1") double longitude,
                        @RequestParam(defaultValue = "-1") double latitude){
-        carManage.get(id).move(speed, longitude, latitude);
-        return Result.success();
+        return carManage.get(id).move(speed, longitude, latitude);
     }
 
 }

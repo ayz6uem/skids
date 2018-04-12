@@ -76,7 +76,7 @@ public class HikvisionTbox extends BaseTbox {
         statusData.setOdo(car.getStatus().getOdo());
         statusData.setCurrent((short)350);
         statusData.setCharging(car.getStatus().isCharging()?STATUS_CHARGING:STATUS_UNCHARGING);
-        statusData.setSpeed((byte)car.getStatus().getSpeed());
+        statusData.setSpeed((byte)(car.getStatus().getSpeed() * 2.0));
         statusData.setSignal((byte)0);
         statusData.setGprs((byte)0);
         statusData.setDatetime(Datetime.now());

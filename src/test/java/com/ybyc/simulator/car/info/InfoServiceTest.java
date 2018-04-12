@@ -2,6 +2,8 @@ package com.ybyc.simulator.car.info;
 
 import com.ybyc.simulator.car.common.helper.Result;
 import com.ybyc.simulator.car.info.dto.CarDTO;
+import com.ybyc.simulator.car.info.dto.InfoDTO;
+import com.ybyc.simulator.car.info.dto.PageData;
 import com.ybyc.simulator.car.info.service.InfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -20,7 +22,8 @@ public class InfoServiceTest {
 
     @Test
     public void test1(){
-        Result<CarDTO> result = infoService.get("2016zdd1201610754001");
+        Result<PageData<InfoDTO>> result = infoService.getByCarNumber("豫A1R63E");
+        log.info("result:{}",result);
         log.info("result:{}",result.getData());
     }
 

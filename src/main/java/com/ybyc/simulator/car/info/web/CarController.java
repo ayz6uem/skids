@@ -1,10 +1,8 @@
 package com.ybyc.simulator.car.info.web;
 
-import com.ybyc.simulator.car.common.helper.BeanHelper;
 import com.ybyc.simulator.car.common.helper.Result;
 import com.ybyc.simulator.car.core.Car;
 import com.ybyc.simulator.car.core.CarManage;
-import com.ybyc.simulator.car.core.Status;
 import com.ybyc.simulator.car.info.dto.CarDTO;
 import com.ybyc.simulator.car.info.dto.StatusDTO;
 import com.ybyc.simulator.car.info.service.InfoService;
@@ -34,6 +32,11 @@ public class CarController {
             return carResult;
         }
         return Result.fail(infoResult.getMsg());
+    }
+
+    @GetMapping("/carNumber")
+    public Result carNumber(String carNumber){
+        return infoService.getByCarNumber(carNumber);
     }
 
     @GetMapping("/{id}/unactive")

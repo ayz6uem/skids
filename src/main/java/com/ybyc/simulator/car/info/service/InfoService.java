@@ -2,6 +2,8 @@ package com.ybyc.simulator.car.info.service;
 
 import com.ybyc.simulator.car.common.helper.Result;
 import com.ybyc.simulator.car.info.dto.CarDTO;
+import com.ybyc.simulator.car.info.dto.InfoDTO;
+import com.ybyc.simulator.car.info.dto.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,10 +16,12 @@ import org.springframework.web.client.RestTemplate;
 public class InfoService {
 
     public String URL_CAR = "/car?carSn={0}";
+    public String URL_CAR_NUMBER = "/cars/info?carNumberOrVin={0}";
 
     @Autowired
     public void fill(@Value("${service.car.uri:}") String uri){
         URL_CAR = uri + URL_CAR;
+        URL_CAR_NUMBER = uri + URL_CAR_NUMBER;
     }
 
     RestTemplate restTemplate = new RestTemplate();
@@ -27,6 +31,17 @@ public class InfoService {
             ResponseEntity<Result<CarDTO>> resp = restTemplate.exchange(URL_CAR, HttpMethod.GET,null,
                     new ParameterizedTypeReference<Result<CarDTO>>(){},
                     carSn);
+            return resp.getBody();
+        }catch (Exception e){
+            return Result.fail("获取车辆信息异常");
+        }
+    }
+
+    public Result<PageData<InfoDTO>> getByCarNumber(String carNumber){
+        try{
+            ResponseEntity<Result<PageData<InfoDTO>>> resp = restTemplate.exchange(URL_CAR_NUMBER, HttpMethod.GET,null,
+                    new ParameterizedTypeReference<Result<PageData<InfoDTO>>>(){},
+                    carNumber);
             return resp.getBody();
         }catch (Exception e){
             return Result.fail("获取车辆信息异常");
