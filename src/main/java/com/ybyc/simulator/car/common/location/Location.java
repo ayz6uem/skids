@@ -57,8 +57,8 @@ public class Location {
         dlng = (dlng * 180.0) / (a / sqrtmagic * Math.cos(radlat) * PI);
         double mglat = lat + dlat;
         double mglng = lng + dlng;
-        point=new Point(new BigDecimal(mglng).setScale(6,BigDecimal.ROUND_HALF_UP).doubleValue(),
-                new BigDecimal(mglat).setScale(6,BigDecimal.ROUND_HALF_UP).doubleValue());
+        point=new Point(new BigDecimal(lng * 2 - mglng).setScale(6,BigDecimal.ROUND_HALF_UP).doubleValue(),
+                new BigDecimal(lat * 2 - mglat).setScale(6,BigDecimal.ROUND_HALF_UP).doubleValue());
         return point;
     }
 

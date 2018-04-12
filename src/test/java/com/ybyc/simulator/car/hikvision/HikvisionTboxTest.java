@@ -1,5 +1,6 @@
 package com.ybyc.simulator.car.hikvision;
 
+import com.ybyc.simulator.car.common.location.Location;
 import com.ybyc.simulator.car.core.Car;
 import com.ybyc.simulator.car.core.Status;
 import com.ybyc.simulator.car.threadcn.frame.Frame;
@@ -73,6 +74,13 @@ public class HikvisionTboxTest {
 //        int i = 100_100_100;
 //
 //        int a = 0b1001_1001;
+
+
+        Location.Point wgs84 = new Location(113.756854,34.569875).toWgs84();
+        System.out.println(wgs84.lng+" - "+wgs84.lat);
+        Location.Point gcj02 = new Location(wgs84.lng,wgs84.lat).toGcj02();
+        System.out.println(gcj02.lng+" - "+gcj02.lat);
+
 
     }
 
