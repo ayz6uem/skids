@@ -63,5 +63,10 @@ public class ActionController {
                        @RequestParam(defaultValue = "-1") double latitude){
         return carManage.get(id).move(speed, longitude, latitude);
     }
+    @GetMapping("/{id}/status/push")
+    public Result pushStatus(@PathVariable String id){
+        carManage.get(id).getTbox().pushStatus();
+        return Result.success();
+    }
 
 }
