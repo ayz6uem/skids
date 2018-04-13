@@ -77,7 +77,7 @@
                     this.$notify.warning({title: '提示',message: '请输入车牌号'});
                     return;
                 }
-                this.$http.get("/api/car/info/carNumber",{params:{carNumber:this.carNumber}}).then(response=>{
+                this.$http.get("/api/info/carNumber",{params:{carNumber:this.carNumber}}).then(response=>{
                     if(response.body.code == 0){
                         var records = response.body.data.records;
                         if(records.length == 0){
@@ -97,7 +97,7 @@
             },
             active(carSn){
                 if(carSn){
-                    this.$http.get("/api/car/info/active",{params:{carSn:carSn}}).then(response=>{
+                    this.$http.get("/api/info/active",{params:{carSn:carSn}}).then(response=>{
                         if(response.body.code == 0){
                             this.$notify.success({title:"成功",message:"激活成功"});
                             this.loadData();
@@ -108,7 +108,7 @@
                 }
             },
             loadData(){
-                this.$http.get("/api/car/info").then(response=>{
+                this.$http.get("/api/info").then(response=>{
                     console.log(response);
                     if(response.body.code == 0){
                         this.tableData = [];

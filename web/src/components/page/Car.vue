@@ -133,7 +133,7 @@ export default {
         }
     },
     created() {
-        this.$http.get("/api/car/info/"+this.$route.params.id).then(response=>{
+        this.$http.get("/api/info/"+this.$route.params.id).then(response=>{
             if(response.body.code == 0){
                 var info = response.body.data;
                 this.car = {
@@ -178,7 +178,7 @@ export default {
                 door: this.car.door,
                 lock: this.car.lock
             }
-            this.$http.post("/api/car/info",data,{emulateJSON:false}).then(response=>{
+            this.$http.post("/api/info",data,{emulateJSON:false}).then(response=>{
                 if(response.body.code == 0){
                     this.$notify({
                         title: '成功',
@@ -202,7 +202,7 @@ export default {
         },
         unactive(){
 
-            this.$http.get("/api/car/info/"+this.$route.params.id+"/unactive").then(response=>{
+            this.$http.get("/api/info/"+this.$route.params.id+"/unactive").then(response=>{
                 if(response.body.code == 0){
                     this.$alert('车辆已移除, 即将跳转回首页', '提示', {
                         confirmButtonText: '确定',
