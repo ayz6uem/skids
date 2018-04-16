@@ -12,7 +12,7 @@ public class CarFactoryTest {
     @Test
     public void test1(){
 //        Car car = Car.builder("13934437547","豫A11223").tbox("hiktbox").build();
-        Car car = Car.builder("E61720390762","皖AY035B").tbox("srdtbox").build();
+        Car car = Car.builder("E61720390762","","皖AY035B").tbox("srdtbox").build();
 
         Status status = car.getStatus();
         status.setSoc(39);

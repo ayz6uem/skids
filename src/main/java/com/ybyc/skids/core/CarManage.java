@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,10 +29,11 @@ public class CarManage {
         if (pool.containsKey(dto.getInfo().getTboxSimNumber())) {
             throw new IllegalArgumentException("车辆已激活，不允许重复激活");
         }
-        Car car = Car.builder(dto.getInfo().getTboxSimNumber(), dto.getInfo().getCarNumber())
+        Car car = Car.builder(dto.getInfo().getTboxSimNumber(), dto.getInfo().getCarSn(), dto.getInfo().getCarNumber())
                 .tbox(dto.getInfo().getTboxTypeCode())
                 .status(dto.getStatusInfo())
                 .build();
+        carRepository.save(car);
         return Result.success(car);
     }
 
@@ -39,7 +41,7 @@ public class CarManage {
     public void active(Car car) {
         Assert.notNull(car, "车辆不存在");
         pool.put(car.getId(), car);
-        carRepository.save(car);
+        log.info("{}启动中",car.getCarNumber());
         car.on();
     }
 
@@ -82,5 +84,10 @@ public class CarManage {
         Assert.notNull(car, "车辆不存在");
         carRepository.save(car);
         return car;
+    }
+
+    public List<Car> findAll(){
+        List<Car> cars = carRepository.findAll();
+        return cars;
     }
 }

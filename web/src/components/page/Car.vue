@@ -5,8 +5,6 @@
             <el-breadcrumb-item>车辆详情</el-breadcrumb-item>
         </el-breadcrumb>
         <div style="margin-top: 20px;">
-            <div style="padding-bottom: 20px;text-align: right">
-            </div>
             <el-form ref="car" :model="car" label-width="80px">
                 <el-row :gutter="20">
                     <el-col :span="12">
@@ -140,14 +138,14 @@ export default {
                     id: info.id,
                     carNumber: info.carNumber,
                     online: info.tbox.connected,
-                    soc: info.status.soc,
-                    odo: info.status.odo,
+                    soc: parseFloat(info.status.soc.toFixed(1)),
+                    odo: info.status.odo.toFixed(0),
                     acc: info.status.acc,
                     charging: info.status.charging,
                     ready: info.status.ready,
                     door: info.status.door,
                     lock: info.status.lock,
-                    speed: info.status.speed,
+                    speed: info.status.speed.toFixed(1),
                     longitude: info.status.longitude,
                     latitude: info.status.latitude,
                 }
@@ -185,6 +183,12 @@ export default {
                         message: '车辆数据已保存',
                         type: 'success'
                     });
+                }else{
+                    this.$notify({
+                        title: '失败',
+                        message: response.body.msg,
+                        type: 'error'
+                    });
                 }
             })
         },
@@ -195,6 +199,12 @@ export default {
                         title: '成功',
                         message: '车辆状态推送成功',
                         type: 'success'
+                    });
+                }else{
+                    this.$notify({
+                        title: '失败',
+                        message: response.body.msg,
+                        type: 'error'
                     });
                 }
             });
@@ -210,6 +220,12 @@ export default {
                         callback: action => {
                             this.$router.replace("/");
                         }
+                    });
+                }else{
+                    this.$notify({
+                        title: '失败',
+                        message: response.body.msg,
+                        type: 'error'
                     });
                 }
             });

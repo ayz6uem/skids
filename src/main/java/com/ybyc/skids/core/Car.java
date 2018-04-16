@@ -28,9 +28,15 @@ public class Car {
      * 车机类型，通过哪种车机上报数据
      */
     private String type;
+    /**
+     * 车辆编号
+     */
+    private String carSn;
 
-    private Status status;
+    @Transient
+    private Status status = new Status();
 
+    @Transient
     private String instruction;
 
     @Transient
@@ -150,8 +156,11 @@ public class Car {
      * @param carNumber
      * @return
      */
-    public static CarBuilder builder(String id, String carNumber){
-        return new CarBuilder(id,carNumber);
+    public static CarBuilder builder(String id, String carSn, String carNumber){
+        return new CarBuilder(id,carSn,carNumber);
+    }
+    public CarBuilder builder(){
+        return new CarBuilder(this);
     }
 
     public void tbox(String type){
@@ -171,11 +180,11 @@ public class Car {
 
         Car car;
 
-        public CarBuilder(String id, String carNumber){
+        public CarBuilder(String id, String carSn, String carNumber){
             car = new Car();
             car.setId(id);
+            car.setCarSn(carSn);
             car.setCarNumber(carNumber);
-            car.setStatus(new Status());
         }
 
         public CarBuilder(Car car){

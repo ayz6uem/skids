@@ -77,9 +77,9 @@ public class HikvisionTbox extends BaseTbox {
         statusData.setLongitude((int)(point.lng*Math.pow(10,6)));
         statusData.setLatitude((int)(point.lat*Math.pow(10,6)));
 
-        statusData.setSoc((byte)car.getStatus().getSoc());
+        statusData.setSoc(processSoc(car.getStatus().getSoc()));
         statusData.setCard((byte)-1);
-        statusData.setOdo((int)car.getStatus().getOdo());
+        statusData.setOdo((int)car.getStatus().getOdo() * 10);
         statusData.setCurrent((short)350);
         statusData.setCharging(car.getStatus().isCharging()?STATUS_CHARGING:STATUS_UNCHARGING);
         statusData.setSpeed((byte)(car.getStatus().getSpeed() * 2.0));
@@ -90,6 +90,20 @@ public class HikvisionTbox extends BaseTbox {
         Frame f1 = Frame.from(StatusData.DIRECTIVE,car.getId(),statusData);
         channel.writeAndFlush(f1);
 
+    }
+
+    public static byte processSoc(double soc) {
+        if(soc>100){
+            soc = 100;
+        }else if (soc>=50) {
+
+        }else if(soc>30){
+            soc = 50 - (50-soc)/2;
+        }else{
+            soc += 10;
+        }
+
+        return (byte) soc;
     }
 
     private void rent(Frame<Rent> frame) {
@@ -213,6 +227,7 @@ public class HikvisionTbox extends BaseTbox {
 
             channel = b.connect(context.getHost(), context.getPort()).sync().channel();
             connected = true;
+            log.info("{}启动完成",car.getCarNumber());
             channel.closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();

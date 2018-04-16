@@ -5,12 +5,10 @@ import com.ybyc.skids.core.Car;
 import com.ybyc.skids.core.CarManage;
 import com.ybyc.skids.direction.domain.Route;
 import com.ybyc.skids.direction.dto.DrivingDTO;
+import com.ybyc.skids.direction.dto.LocationDTO;
 import com.ybyc.skids.direction.service.AmapService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/direction")
@@ -23,9 +21,10 @@ public class DirectionController {
     CarManage carManage;
 
     @PostMapping("/{id}/to")
-    public Result to(@PathVariable String id, double longitude, double latitude){
+    public Result to(@PathVariable String id, @RequestBody LocationDTO locationDTO){
         Car car = carManage.get(id);
-        DrivingDTO drivingDTO = amapService.driving(car.getStatus().getLongitude(),car.getStatus().getLatitude(),longitude,latitude);
+        DrivingDTO drivingDTO = amapService.driving(car.getStatus().getLongitude(),car.getStatus().getLatitude(),
+                locationDTO.getLongitude(),locationDTO.getLatitude());
         if(drivingDTO.ok()){
             car.setRoute(drivingDTO.parseRoute());
             return Result.success();

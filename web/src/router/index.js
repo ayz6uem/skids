@@ -12,6 +12,10 @@ export default new Router({
         {
             path: '/car/:id',
             component: resolve => require(['../components/page/Car.vue'], resolve)
+        },
+        {
+            path: '/car/direction/:id',
+            component: resolve => require(['../components/page/Direction.vue'], resolve)
         }
     ]
 })

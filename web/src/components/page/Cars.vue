@@ -52,7 +52,7 @@
                 <el-table-column prop="speed" label="时速(km/h)" width="100"></el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <router-link :to="'/car/'+scope.row.id"><el-button type="text" >查看</el-button></router-link>
+                        <router-link :to="'/car/direction/'+scope.row.id"><el-button type="text" >导航</el-button></router-link>
                     </template></el-table-column>
             </el-table>
         </div>
@@ -109,7 +109,6 @@
             },
             loadData(){
                 this.$http.get("/api/info").then(response=>{
-                    console.log(response);
                     if(response.body.code == 0){
                         this.tableData = [];
                         response.body.data.forEach(info=>{
@@ -117,14 +116,14 @@
                                 id: info.id,
                                 carNumber: info.carNumber,
                                 online: info.tbox.connected,
-                                soc: info.status.soc,
-                                odo: info.status.odo,
+                                soc: info.status.soc.toFixed(1),
+                                odo: info.status.odo.toFixed(0),
                                 acc: info.status.acc,
                                 charging: info.status.charging,
                                 ready: info.status.ready,
                                 door: info.status.door,
                                 lock: info.status.lock,
-                                speed: info.status.speed,
+                                speed: info.status.speed.toFixed(1),
                             }
                             this.tableData.push(obj);
                         });

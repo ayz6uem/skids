@@ -36,6 +36,7 @@ public class Route {
     public boolean finishMove(Car car) {
         car.getStatus().setSpeed(0);
         car.setInstruction("");
+        log.info("car finish:{}",car.getCarNumber());
         return true;
     }
 
@@ -52,7 +53,7 @@ public class Route {
     }
 
     private boolean hasStep() {
-        return current < steps.size();
+        return current+1 < steps.size();
     }
 
     private Step findStep() {
@@ -67,7 +68,7 @@ public class Route {
                 d += step.getDuration();
                 lastOffset = offset;
                 offset = Math.abs(d - seconds);
-            }while (d> seconds);
+            }while (d < seconds && current+1 < steps.size());
 
             if(lastOffset < offset){
                 current --;

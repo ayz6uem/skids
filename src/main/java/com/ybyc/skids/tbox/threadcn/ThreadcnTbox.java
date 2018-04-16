@@ -152,6 +152,7 @@ public class ThreadcnTbox extends BaseTbox {
 
             channel = b.connect(context.getHost(), context.getPort()).sync().channel();
             connected = true;
+            log.info("{}启动完成",car.getCarNumber());
             channel.closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
