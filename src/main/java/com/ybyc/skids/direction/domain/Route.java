@@ -57,6 +57,7 @@ public class Route {
     }
 
     private Step findStep() {
+        double offsetDistance = 0;
         if (datetime > 0) {
             long seconds = TimeHelper.currentSeconds() - datetime;
             long d = 0;
@@ -68,13 +69,17 @@ public class Route {
                 d += step.getDuration();
                 lastOffset = offset;
                 offset = Math.abs(d - seconds);
+                offsetDistance += step.getDistance();
             }while (d < seconds && current+1 < steps.size());
 
             if(lastOffset < offset){
                 current --;
+                offsetDistance -= steps.get(current).getDistance();
             }
         }
-        return steps.get(current);
+        Step step = steps.get(current);
+        step.setDistance(offsetDistance + step.getDistance());
+        return step;
     }
 
 }
