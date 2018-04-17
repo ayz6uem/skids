@@ -60,6 +60,8 @@ public class DrivingDTO {
     public Route parseRoute(){
         Route route = new Route();
         PathDTO pathDTO = getRoute().getPath();
+        route.setDistance(pathDTO.distance * 0.001);
+        route.setDuration(pathDTO.duration / 60.0 / 60.0);
         List<StepDTO> stepDTOS = pathDTO.getSteps();
         stepDTOS.forEach(stepDTO -> {
 

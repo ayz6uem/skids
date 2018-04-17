@@ -6,8 +6,8 @@
         </el-breadcrumb>
         <div style="margin-top: 20px;">
             <div style="padding-bottom: 20px">
-                <span>{{car.carNumber}} - 电量：{{car.soc}}% 车速：{{car.speed}}km/h</span>
-                <span style="float:right">{{car.instruction}}</span>
+                <span>{{car.carNumber}} - 电量:{{car.soc}}% 车速:{{car.speed}}km/h ODO:{{car.odo}}km</span>
+                <span v-if="car.route" style="float:right">{{car.route.current+1}}/{{car.route.steps.length}} 共{{car.route.distance.toFixed(1)}}km {{car.route.duration.toFixed(1)}}h - {{car.instruction}}</span>
             </div>
             <el-amap vid="map" :zoom="map.poi.zoom" cursor="point" :amap-manager="amapManager" :center="position" :plugin="map.plugins" :events="map.events" style="height: 750px;border:1px solid #ddd">
                 <el-amap-marker :icon="require('~/assets/car.png')" :offset="map.poi.offset" :position="position" draggable="true" :events="map.poi.events" ></el-amap-marker>
@@ -144,6 +144,7 @@ export default {
                     this.car.id = info.id;
                     this.car.carNumber = info.carNumber;
                     this.car.soc = info.status.soc.toFixed(1);
+                    this.car.odo = info.status.odo.toFixed(1);
                     this.car.speed = info.status.speed.toFixed(1);
                     this.car.longitude = info.status.longitude;
                     this.car.latitude = info.status.latitude;

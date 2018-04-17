@@ -15,6 +15,8 @@ public class Route {
 
     private long datetime;
     private int current = 0;
+    private double distance;
+    private double duration;
     private List<Step> steps = new ArrayList<>();
 
     /**
@@ -53,7 +55,7 @@ public class Route {
     }
 
     private boolean hasStep() {
-        return current+1 < steps.size();
+        return current < steps.size() - 1;
     }
 
     private Step findStep() {
@@ -65,14 +67,15 @@ public class Route {
             long offset = 0;
 
             do{
-                Step step = steps.get(++current);
+                current ++;
+                Step step = steps.get(current);
                 d += step.getDuration();
                 lastOffset = offset;
                 offset = Math.abs(d - seconds);
                 offsetDistance += step.getDistance();
-            }while (d < seconds && current+1 < steps.size());
+            }while (d < seconds && current < steps.size() - 1);
 
-            if(lastOffset < offset){
+            if(lastOffset!=0 && lastOffset < offset){
                 current --;
                 offsetDistance -= steps.get(current).getDistance();
             }
