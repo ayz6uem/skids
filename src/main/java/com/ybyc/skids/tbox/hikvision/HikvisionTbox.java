@@ -65,7 +65,7 @@ public class HikvisionTbox extends BaseTbox {
     public void pushStatus() {
         super.pushStatus();
         if(Objects.isNull(channel)){
-            return;
+            throw new IllegalArgumentException("设备正在连接");
         }
 
         StatusData statusData = new StatusData();

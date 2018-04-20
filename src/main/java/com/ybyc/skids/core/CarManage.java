@@ -29,7 +29,7 @@ public class CarManage {
         if (pool.containsKey(dto.getInfo().getTboxSimNumber())) {
             throw new IllegalArgumentException("车辆已激活，不允许重复激活");
         }
-        Car car = Car.builder(dto.getInfo().getTboxSimNumber(), dto.getInfo().getCarSn(), dto.getInfo().getCarNumber())
+        Car car = Car.builder(dto.getInfo().getTboxSimNumber().trim(), dto.getInfo().getCarSn(), dto.getInfo().getCarNumber())
                 .tbox(dto.getInfo().getTboxTypeCode())
                 .status(dto.getStatusInfo())
                 .build();

@@ -47,6 +47,9 @@ public class ThreadcnTbox extends BaseTbox {
     @Override
     public void pushStatus() {
         super.pushStatus();
+        if(Objects.isNull(channel)){
+            throw new IllegalArgumentException("设备正在连接");
+        }
         StatusData statusData = new StatusData();
         statusData.setAcc(car.getStatus().isAcc()?StatusData.ACC_ON:StatusData.ACC_OFF);
         statusData.setDoor(car.getStatus().isDoor()?StatusData.DOOR_OPEN:StatusData.DOOR_CLOSE);

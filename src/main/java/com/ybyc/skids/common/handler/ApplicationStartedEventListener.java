@@ -29,7 +29,6 @@ public class ApplicationStartedEventListener implements ApplicationListener<Appl
         log.info("init:{}",cars);
         cars.forEach(car -> {
             Result<CarDTO> result = infoService.get(car.getCarSn());
-            log.info("result:{}",result);
             if(result.result()){
                 CarDTO dto = result.getData();
                 car.builder().tbox(car.getType()).status(dto.getStatusInfo());
