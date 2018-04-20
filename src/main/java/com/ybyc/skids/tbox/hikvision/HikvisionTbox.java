@@ -252,6 +252,9 @@ public class HikvisionTbox extends BaseTbox {
 
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            if(channel==null){
+                channel = ctx.channel();
+            }
             pushStatus();
         }
     }
