@@ -57,8 +57,8 @@ module.exports = (options = {}) => ({
         host: '127.0.0.1',
         port: 8010,
         proxy: {
-            '/api/': 'http://localhost:9810'
-            // '/api/': 'http://47.100.76.78:8810'
+            // '/api/': 'http://localhost:9810'
+            '/api/': 'http://47.100.76.78:8810'
         },
         historyApiFallback: {
             index: url.parse(options.dev ? '/assets/' : publicPath).pathname

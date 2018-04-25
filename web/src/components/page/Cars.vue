@@ -4,14 +4,14 @@
             <el-breadcrumb-item><a href="/">车辆列表</a></el-breadcrumb-item>
         </el-breadcrumb>
         <div style="margin-top: 20px;">
-            <el-input placeholder="车牌号" v-model="carNumber"></el-input>
-            <el-button @click="search">激活</el-button>
+            <el-input placeholder="车牌号" v-model="carNumber" v-on:change="carNumberChange"></el-input>
+            <el-button @click="search" >激活</el-button>
         </div>
         <div style="margin-top: 20px;">
             <el-table :data="tableData" stripe border style="width: 100%">
                 <el-table-column label="车牌号" width="180">
                     <template slot-scope="scope">
-                        <router-link :to="'/car/'+scope.row.id"><el-button type="text">{{scope.row.carNumber}}</el-button></router-link>
+                        <router-link :to="'/car/'+scope.row.id" style="color:#409eff;text-decoration: none;">{{scope.row.carNumber}}</router-link>
                     </template>
                 </el-table-column>
                 <el-table-column label="在线" width="90">
@@ -63,8 +63,8 @@
     export default {
         data() {
             return {
-                tableData: [
-                ],
+                tableData: [],
+                data:[],
                 carNumber: ''
             }
         },
@@ -72,6 +72,11 @@
             this.loadData();
         },
         methods : {
+            filterHandler(value, row, column) {
+                console.log("filterHandler");
+                const property = column['property'];
+                return row[property] === value;
+            },
             search(){
                 if(!this.carNumber){
                     this.$notify.warning({title: '提示',message: '请输入车牌号'});
@@ -100,6 +105,7 @@
                     this.$http.get("/api/info/active",{params:{carSn:carSn}}).then(response=>{
                         if(response.body.code == 0){
                             this.$notify.success({title:"成功",message:"激活成功"});
+                            this.carNumber='';
                             this.loadData();
                         }else{
                             this.$notify.warning({title:"提示",message:response.body.msg});
@@ -110,7 +116,7 @@
             loadData(){
                 this.$http.get("/api/info").then(response=>{
                     if(response.body.code == 0){
-                        this.tableData = [];
+                        this.data = [];
                         response.body.data.forEach(info=>{
                             var obj = {
                                 id: info.id,
@@ -125,11 +131,39 @@
                                 lock: info.status.lock,
                                 speed: info.status.speed.toFixed(1),
                             }
-                            this.tableData.push(obj);
+                            this.data.push(obj);
                         });
-
+                        this.fillTable();
                     }
                 })
+            },
+            fillTable(){
+                var self = this;
+                this.tableData = [];
+                this.data.forEach(info=>{
+                    if(self.fillter(info.carNumber)){
+                        this.tableData.push(info);
+                    }
+                });
+            },
+            fillter(carNumber){
+                if(this.carNumber==''){
+                    return true;
+                }
+                var inputRegx = new RegExp(this.carNumber,"i");
+                if(inputRegx.test(carNumber)){
+                    return true;
+                }
+                if(inputRegx.test(carNumber.replace(/[^0-9]/ig,""))){
+                    return true;
+                }
+                return false;
+            },
+            carNumberChange(){
+                this.fillTable();
+            },
+            detail(id){
+                this.$router.push("/car/"+id);
             }
         }
     }
