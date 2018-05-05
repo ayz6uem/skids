@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const url = require('url')
 const publicPath = ''
 
-module.exports = (options = {}) => ({
+module.exports = (options = {dev:true}) => ({
     entry: {
         index: './src/main.js'
     },

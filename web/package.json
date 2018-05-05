@@ -1,6 +1,6 @@
 {
-  "name": "simulator-car-web",
-  "description": "A web project for simulator-car",
+  "name": "skids",
+  "description": "A web project for simulator car",
   "author": "wz",
   "private": true,
   "scripts": {
