@@ -21,7 +21,7 @@ tbox:
     idle: 30
   threadcn:
     host: 47.100.76.78
-    port: 8620
+    port: 8622
     idle: 30
 service:
   car:
@@ -45,7 +45,7 @@ tbox:
     idle: 30
   threadcn:
     host: 47.100.76.78
-    port: 8620
+    port: 8622
     idle: 30
 service:
   car:

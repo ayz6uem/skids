@@ -84,15 +84,27 @@ public class ThreadcnTbox extends BaseTbox {
         }else{
             code = Ack.CODE_FAIL;
         }
-        channel.writeAndFlush(new Frame(car.getId(),Ack.rent(code)).toString());
+        channel.writeAndFlush(new Frame(car.getId(),Ack.repay(code)).toString());
     }
 
     private void maintain(){
-        rent();
+        int code = car.rent().result()? Ack.CODE_SUCCESS: Ack.CODE_FAIL;
+        channel.writeAndFlush(new Frame(car.getId(),Ack.maintain(code)).toString());
     }
 
     private void unmaintain(){
-        repay();
+        String repayCode = car.repay().getCode();
+        int code;
+        if(Objects.equals(Result.OK_CODE,repayCode)){
+            code = Ack.CODE_SUCCESS;
+        }else if(Objects.equals(Result.CODE_DOOR,repayCode)){
+            code = Ack.CODE_DOOR;
+        }else if(Objects.equals(Result.CODE_SPEED,repayCode)){
+            code = Ack.CODE_SPEED;
+        }else{
+            code = Ack.CODE_FAIL;
+        }
+        channel.writeAndFlush(new Frame(car.getId(),Ack.unmaintain(code)).toString());
     }
 
     private void lock(){
