@@ -67,6 +67,16 @@ public class ThreadcnTbox extends BaseTbox {
         channel.writeAndFlush(new Frame(car.getId(),statusData).toString());
     }
 
+    public void pushInfo() {
+        if(Objects.isNull(channel)){
+            throw new IllegalArgumentException("设备正在连接");
+        }
+        Info info = new Info();
+        info.setSn(car.getId());
+
+        channel.writeAndFlush(new Frame(car.getId(),info).toString());
+    }
+
     private void rent(){
         int code = car.rent().result()? Ack.CODE_SUCCESS: Ack.CODE_FAIL;
         channel.writeAndFlush(new Frame(car.getId(),Ack.rent(code)).toString());
@@ -195,6 +205,7 @@ public class ThreadcnTbox extends BaseTbox {
             if(channel==null){
                 channel = ctx.channel();
             }
+            pushInfo();
             pushStatus();
         }
 
