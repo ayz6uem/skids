@@ -50,3 +50,28 @@ tbox:
 service:
   car:
     uri: http://47.100.76.78:8420
+
+
+---
+
+logging:
+  config: classpath:logback-spring-${spring.profiles}.xml
+spring:
+  profiles: prod
+  data:
+    mongodb:
+      uri: mongodb://test.1byongche.cn:27017/skids
+server:
+  port: 8810
+tbox:
+  hikvision:
+    host: 47.100.76.78
+    port: 8610
+    idle: 30
+  threadcn:
+    host: 139.224.42.229
+    port: 6123
+    idle: 30
+service:
+  car:
+    uri: http://47.100.76.78:8420
