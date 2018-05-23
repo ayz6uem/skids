@@ -103,6 +103,7 @@
                         <exclude>**/HikvisionTboxTest.java</exclude>
                         <exclude>**/InfoServiceTest.java</exclude>
                         <exclude>**/AmapServiceTest.java</exclude>
+                        <exclude>**/ThreadcnTboxTest.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
