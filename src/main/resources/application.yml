@@ -20,7 +20,7 @@ tbox:
     port: 8610
     idle: 30
   threadcn:
-    host: 47.100.76.78
+    host: 127.0.0.1
     port: 8622
     idle: 30
 service:

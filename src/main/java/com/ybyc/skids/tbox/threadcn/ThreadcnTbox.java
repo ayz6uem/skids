@@ -27,9 +27,15 @@ public class ThreadcnTbox extends BaseTbox {
 
     Channel channel;
 
+    EventLoopGroup workerGroup;
+
     public ThreadcnTbox(Car car, ThreadcnContext context) {
         super(car);
         this.context = context;
+    }
+
+    public void setWorkerGroup(EventLoopGroup workerGroup) {
+        this.workerGroup = workerGroup;
     }
 
     @Override
@@ -158,7 +164,9 @@ public class ThreadcnTbox extends BaseTbox {
 
     private void boot() {
 
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        if(workerGroup==null){
+            workerGroup = new NioEventLoopGroup();
+        }
         try {
             Bootstrap b = new Bootstrap();
             b.group(workerGroup);
@@ -167,6 +175,7 @@ public class ThreadcnTbox extends BaseTbox {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addLast(new ExceptionHandler());
                     ch.pipeline().addLast(new IdleStateHandler(context.getIdle(),context.getIdle(),context.getIdle()*2));
                     ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
                     ch.pipeline().addLast(new StringDecoder());
@@ -186,6 +195,13 @@ public class ThreadcnTbox extends BaseTbox {
             connected = false;
         }
 
+    }
+
+    class ExceptionHandler extends ChannelInboundHandlerAdapter{
+        @Override
+        public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+            log.error(cause.getMessage(),cause);
+        }
     }
 
     class ClientHandler extends SimpleChannelInboundHandler<String> {
