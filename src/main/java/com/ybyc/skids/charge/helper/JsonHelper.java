@@ -27,4 +27,13 @@ public class JsonHelper {
         }
     }
 
+    public static <T> T toObject(byte[] data, Class<T> resultClass){
+        try {
+            return objectMapper.readValue(data,resultClass);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException(e);
+        }
+    }
+
 }

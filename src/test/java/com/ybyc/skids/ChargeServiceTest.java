@@ -1,8 +1,10 @@
 package com.ybyc.skids;
 
+import com.ybyc.skids.charge.ChargeService;
 import com.ybyc.skids.charge.common.AccessTemplate;
 import com.ybyc.skids.charge.common.Operator;
 import com.ybyc.skids.charge.common.model.AccessToken;
+import com.ybyc.skids.charge.common.model.ConnectorStatusEnum;
 import com.ybyc.skids.charge.common.model.RequestData;
 import com.ybyc.skids.charge.common.model.ResponseData;
 import com.ybyc.skids.charge.param.QueryTokenParam;
@@ -20,6 +22,9 @@ public class ChargeServiceTest {
     @Resource
     AccessTemplate accessTemplate;
 
+    @Resource
+    ChargeService chargeService;
+
     @Test
     public void test1(){
         String url = "http://127.0.0.1:9810/charge/exchange/query_token";
@@ -32,6 +37,11 @@ public class ChargeServiceTest {
 
         ResponseData<AccessToken> responseData = accessTemplate.post(url,requestData, AccessToken.class);
         System.out.println(responseData);
+    }
+
+    @Test
+    public void test2(){
+        chargeService.stationStatusNotify("41020180831001", ConnectorStatusEnum.USED_UNCHARGE);
     }
 
 }

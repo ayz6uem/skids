@@ -1,6 +1,7 @@
 package com.ybyc.skids.charge;
 
 import com.ybyc.skids.charge.common.AccessTemplate;
+import com.ybyc.skids.charge.common.AccessTokenContext;
 import com.ybyc.skids.charge.common.Operator;
 import com.ybyc.skids.charge.common.model.*;
 import com.ybyc.skids.charge.param.ConnectorStatusInfo;
@@ -21,7 +22,7 @@ public class ChargeService {
     @Resource
     AccessTemplate accessTemplate;
 
-    public AccessToken getAccessToken(){
+    public synchronized void getAccessToken(){
         QueryTokenParam queryTokenParam = new QueryTokenParam();
         queryTokenParam.setOperatorId(Operator.OPERATOR_ID);
         queryTokenParam.setOperatorSecret(Operator.OPERATOR_SECRET);
@@ -29,33 +30,46 @@ public class ChargeService {
         if(!responseData.isOk()){
             throw new IllegalArgumentException(responseData.getMsg());
         }
-        return responseData.getData();
+        AccessToken accessToken = responseData.getData();
+        AccessTokenContext.put(accessToken);
+    }
+
+    public void checkToken(){
+        if(!AccessTokenContext.contain(Operator.OPERATOR_ID)){
+            getAccessToken();
+        }
     }
 
     public void chargeStartNotify(ChargeActionResult actionResult) {
+        checkToken();
         accessTemplate.post(Operator.URL_CHARGE_START_NOTIFY,actionResult, ChargeNotifyResult.class);
     }
 
     public void chargeStopNotify(ChargeActionResult actionResult) {
+        checkToken();
         accessTemplate.post(Operator.URL_CHARGE_STOP_NOTIFY,actionResult, ChargeNotifyResult.class);
     }
 
     public void chargeStatusNotify(Order order){
+        checkToken();
         EquipChargeStatus chargeStatus = EquipChargeStatus.of(order);
         accessTemplate.post(Operator.URL_CHARGE_STATUS_NOTIFY,chargeStatus,ChargeNotifyResult.class);
     }
 
     public void chargeInfoNotify(Order order){
+        checkToken();
         ChargeOrderInfo orderInfo = ChargeOrderInfo.of(order);
         accessTemplate.post(Operator.URL_CHARGE_INFO_NOTIFY,orderInfo,OrderNotifyResult.class);
     }
 
     public void chargeRecordNotify(Order order){
+        checkToken();
         ChargeOrderInfo orderInfo = ChargeOrderInfo.of(order);
         accessTemplate.post(Operator.URL_CHARGE_RECORD_NOTIFY,orderInfo,OrderNotifyResult.class);
     }
 
     public void stationStatusNotify(String connectorId, ConnectorStatusEnum connectorStatusEnum){
+        checkToken();
         StationStatusNotify stationStatusNotify = new StationStatusNotify();
         ConnectorStatusInfo connectorStatusInfo = new ConnectorStatusInfo();
         connectorStatusInfo.setConnectorID(connectorId);

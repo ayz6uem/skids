@@ -14,7 +14,7 @@ public class Operator {
      */
     public static final String PLATFORM_OPERATOR_ID = "MA3XAFGU5";
     public static final String PLATFORM_OPERATOR_SECRET = "8PEU6wXTYhcRSy3o";
-    public static final String PLATFORM_BASE_URL = "http://hlht.hechongdian.cn/exchange/charging/push";
+    public static final String PLATFORM_BASE_URL = "http://47.104.149.175:9000/exchange/charging/push";
 
     public static final String OPERATOR_ID = "skids";
     public static final String OPERATOR_SECRET = "8PEU6wXTYhcRSy3o";
