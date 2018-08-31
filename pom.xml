@@ -99,7 +99,12 @@
                 <version>2.17</version>
                 <configuration>
                     <excludes>
-                        <exclude>**/*Test.java</exclude>
+                        <exclude>**/CarFactoryTest.java</exclude>
+                        <exclude>**/HikvisionTboxTest.java</exclude>
+                        <exclude>**/InfoServiceTest.java</exclude>
+                        <exclude>**/AmapServiceTest.java</exclude>
+                        <exclude>**/ThreadcnTboxTest.java</exclude>
+                        <exclude>**/ChargeServiceTest.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
