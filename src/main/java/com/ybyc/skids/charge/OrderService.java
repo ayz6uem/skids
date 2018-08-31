@@ -1,6 +1,7 @@
 package com.ybyc.skids.charge;
 
 import com.ybyc.skids.charge.common.OrderContext;
+import com.ybyc.skids.charge.common.model.ConnectorStatusEnum;
 import com.ybyc.skids.charge.common.model.Order;
 import com.ybyc.skids.charge.common.model.StartChargeSeqStatEnum;
 import com.ybyc.skids.charge.result.ChargeActionResult;
@@ -25,6 +26,7 @@ public class OrderService {
         Order order = new Order();
         order.setSn(sn);
         order.setConnectorId(connectorId);
+        order.setConnectorStatusEnum(ConnectorStatusEnum.USED_CHARGING);
         order.setStartTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         order.setStatEnum(StartChargeSeqStatEnum.CHARGING);
         OrderContext.put(order);
@@ -47,6 +49,7 @@ public class OrderService {
         Order order = OrderContext.getPOOL().get(sn);
         order.setEndTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         order.setStatEnum(StartChargeSeqStatEnum.END);
+        order.setConnectorStatusEnum(ConnectorStatusEnum.USED_UNCHARGE);
 
         //假设与桩通讯了5秒钟
         sleep(5);
