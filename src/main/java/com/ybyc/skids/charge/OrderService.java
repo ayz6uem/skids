@@ -75,7 +75,9 @@ public class OrderService {
         Iterator<Map.Entry<String,Order>> it = OrderContext.getPOOL().entrySet().iterator();
         while(it.hasNext()){
             Map.Entry<String,Order> entry = it.next();
-            chargeService.chargeStatusNotify(entry.getValue());
+            Order order = entry.getValue();
+            order.pulse();
+            chargeService.chargeStatusNotify(order);
         }
     }
 

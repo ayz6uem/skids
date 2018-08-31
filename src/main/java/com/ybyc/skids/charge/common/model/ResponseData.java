@@ -26,4 +26,9 @@ public class ResponseData<T> {
         return Objects.equals(0,ret);
     }
 
+    @JsonIgnore
+    public boolean isTokenError(){
+        return Objects.equals(2,ret);
+    }
+
 }

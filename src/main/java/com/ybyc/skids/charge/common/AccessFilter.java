@@ -55,14 +55,14 @@ public class AccessFilter implements Filter {
 
         if(!isQueryToken(request)){
             if(!AccessTokenContext.contain(encryptRequestData.getOperatorID())){
-                doResponse(servletResponse,"token错误");
+                doResponse(servletResponse,2,"token错误");
                 return;
             }
             //校验token
             String token = request.getHeader("Authorization");
             AccessToken accessToken = AccessTokenContext.get(encryptRequestData.getOperatorID());
             if(!Objects.equals("Bearer "+accessToken.getAccessToken(),token)){
-                doResponse(servletResponse,"token错误");
+                doResponse(servletResponse,2,"token错误");
                 return;
             }
         }
@@ -86,10 +86,18 @@ public class AccessFilter implements Filter {
      * 封装响应请求参数
      * @return
      */
-    public void doResponse(ServletResponse response, String msg) throws IOException {
+    public void doResponse(ServletResponse response,int ret,  String msg) throws IOException {
         EncryptResponseData standardResponseData = new EncryptResponseData();
-        standardResponseData.setRet(1);
+        standardResponseData.setRet(ret);
         standardResponseData.setMsg(msg);
         response.getWriter().write(JsonHelper.toJson(standardResponseData));
+    }
+
+    /**
+     * 封装响应请求参数
+     * @return
+     */
+    public void doResponse(ServletResponse response, String msg) throws IOException {
+        doResponse(response,500,msg);
     }
 }
