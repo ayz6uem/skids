@@ -8,6 +8,8 @@ import com.ybyc.skids.charge.common.model.RequestData;
 import com.ybyc.skids.charge.helper.JsonHelper;
 import com.ybyc.skids.charge.helper.RewriteServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
@@ -91,6 +93,7 @@ public class AccessFilter implements Filter {
     public void doResponse(ServletResponse response,int ret,  String msg) throws IOException {
         String result = JsonHelper.toJson(Response.fail(ret,msg));
         log.info("filter response:{}",result);
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().write(result);
     }
 
