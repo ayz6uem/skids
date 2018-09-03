@@ -89,8 +89,9 @@ public class AccessFilter implements Filter {
      * @return
      */
     public void doResponse(ServletResponse response,int ret,  String msg) throws IOException {
-        log.info("filter response:{} {}",ret,msg);
-        response.getWriter().write(JsonHelper.toJson(Response.fail(ret,msg)));
+        String result = JsonHelper.toJson(Response.fail(ret,msg));
+        log.info("filter response:{}",result);
+        response.getWriter().write(result);
     }
 
     /**
