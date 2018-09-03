@@ -11,10 +11,10 @@ public class Response {
         return build(data,0,"success");
     }
     public static EncryptResponseData fail(int ret, String msg){
-        return build(null,ret,msg);
+        return build("",ret,msg);
     }
     public static EncryptResponseData fail(String msg){
-        return build(null,1,msg);
+        return build("",1,msg);
     }
     public static EncryptResponseData fail(String msg, Object data){
         return build(data,1,msg);
