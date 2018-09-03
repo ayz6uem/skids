@@ -88,7 +88,7 @@ public class AccessTemplate {
         QueryTokenParam queryTokenParam = new QueryTokenParam();
         queryTokenParam.setOperatorId(Operator.OPERATOR_ID);
         queryTokenParam.setOperatorSecret(Operator.OPERATOR_SECRET);
-        ResponseData<AccessToken> responseData = post(Operator.URL_QUERY_TOKEN, queryTokenParam, AccessToken.class);
+        ResponseData<AccessToken> responseData = post(Operator.URL_QUERY_TOKEN, Operator.OPERATOR_ID, queryTokenParam, AccessToken.class);
         if(!responseData.isOk()){
             throw new IllegalArgumentException(responseData.getMsg());
         }
