@@ -26,7 +26,7 @@ public class Order {
         power += Math.random() + 0.5;
         power = new BigDecimal(power).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
         money = power * 1.5;
-        power = new BigDecimal(money).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        money = new BigDecimal(money).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     @Override

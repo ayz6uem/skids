@@ -5,6 +5,7 @@ import com.ybyc.skids.charge.common.model.ConnectorStatusEnum;
 import com.ybyc.skids.charge.common.model.Order;
 import com.ybyc.skids.charge.common.model.StartChargeSeqStatEnum;
 import com.ybyc.skids.charge.result.ChargeActionResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class OrderService {
 
@@ -70,7 +72,7 @@ public class OrderService {
 
     @Scheduled(fixedRate = 60 * 1000)
     public void scheduleNotify(){
-
+        log.info("pool:{}",OrderContext.getPOOL());
         //每60秒，通知订单信息
         Iterator<Map.Entry<String,Order>> it = OrderContext.getPOOL().entrySet().iterator();
         while(it.hasNext()){
