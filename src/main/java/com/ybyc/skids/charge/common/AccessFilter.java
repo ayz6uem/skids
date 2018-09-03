@@ -7,6 +7,7 @@ import com.ybyc.skids.charge.common.model.EncryptResponseData;
 import com.ybyc.skids.charge.common.model.RequestData;
 import com.ybyc.skids.charge.helper.JsonHelper;
 import com.ybyc.skids.charge.helper.RewriteServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+@Slf4j
 @WebFilter("/charge/exchange/*")
 public class AccessFilter implements Filter {
 
@@ -87,10 +89,8 @@ public class AccessFilter implements Filter {
      * @return
      */
     public void doResponse(ServletResponse response,int ret,  String msg) throws IOException {
-        EncryptResponseData standardResponseData = new EncryptResponseData();
-        standardResponseData.setRet(ret);
-        standardResponseData.setMsg(msg);
-        response.getWriter().write(JsonHelper.toJson(standardResponseData));
+        log.info("filter response:{} {}",ret,msg);
+        response.getWriter().write(JsonHelper.toJson(Response.fail(ret,msg)));
     }
 
     /**
