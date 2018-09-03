@@ -2,6 +2,7 @@ package com.ybyc.skids.charge.common.model;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Data
@@ -22,8 +23,10 @@ public class Order {
     private double money = 0;
 
     public void pulse(){
-        power += 1;
+        power += Math.random() + 0.5;
+        power = new BigDecimal(power).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
         money = power * 1.5;
+        power = new BigDecimal(money).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     @Override

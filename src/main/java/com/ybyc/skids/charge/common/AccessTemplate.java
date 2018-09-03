@@ -9,6 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -77,7 +78,7 @@ public class AccessTemplate {
         ResponseData<T> responseData = new ResponseData<>();
         responseData.setRet(encryptResponseData.getRet());
         responseData.setMsg(encryptResponseData.getMsg());
-        if(encryptResponseData.getData()!=null){
+        if(!StringUtils.isEmpty(encryptResponseData.getData())){
             responseData.setData(JsonHelper.toObject(operator.getAesCodec().cbcDecrypt(encryptResponseData.getData()), resultClass));
         }
         return responseData;
