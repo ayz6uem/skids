@@ -66,7 +66,7 @@ public class OrderService {
         chargeService.chargeInfoNotify(order);
         chargeService.chargeRecordNotify(order);
 
-        OrderContext.getPOOL().remove(order);
+        OrderContext.getPOOL().remove(order.getSn());
 
     }
 
