@@ -70,9 +70,8 @@ public class OrderService {
 
     }
 
-    @Scheduled(fixedRate = 60 * 1000)
+    @Scheduled(fixedRate = 30 * 1000)
     public void scheduleNotify(){
-        log.info("pool:{}",OrderContext.getPOOL());
         //每60秒，通知订单信息
         Iterator<Map.Entry<String,Order>> it = OrderContext.getPOOL().entrySet().iterator();
         while(it.hasNext()){
