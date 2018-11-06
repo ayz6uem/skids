@@ -14,8 +14,8 @@ public class Operator {
     /**
      * 己方运营商ID
      */
-    public static final String PLATFORM_OPERATOR_ID = "MA3XAFGU5";
-    public static final String PLATFORM_OPERATOR_SECRET = "8PEU6wXTYhcRSy3o";
+    public static final String PLATFORM_OPERATOR_ID = "320145661";
+    public static final String PLATFORM_OPERATOR_SECRET = "LJ9sPDLNl0Jnxcmx";
     public static final String PLATFORM_BASE_URL = "http://47.104.149.175:8090/exchange/charging/push";
 
     public static final String OPERATOR_ID = "skids";
