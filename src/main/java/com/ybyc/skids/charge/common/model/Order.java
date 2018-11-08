@@ -1,6 +1,8 @@
 package com.ybyc.skids.charge.common.model;
 
 import lombok.Data;
+import lombok.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -19,24 +21,26 @@ public class Order {
 
     private double current = 12.6;
     private double voltage = 220;
-    private double power = 0;
-    private double money = 0;
+    private BigDecimal power = new BigDecimal(0);
+    private BigDecimal money = new BigDecimal(0);
+    private BigDecimal serviceMoney = new BigDecimal(0);
+    private BigDecimal totalMoney = new BigDecimal(0);
 
-    public void pulse(){
-        power += Math.random() + 0.5;
-        power = new BigDecimal(power).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-        money = power * 1.5;
-        money = new BigDecimal(money).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-    }
+    public void pulse() {
+        power = power.add(new BigDecimal(Math.random() + 0.5)).setScale(2, BigDecimal.ROUND_HALF_UP);
+        money = power.multiply(new BigDecimal(1.5));
+        serviceMoney = power.multiply(new BigDecimal(0.5));
+        totalMoney = power.multiply(new BigDecimal(2));
+}
 
     @Override
     public boolean equals(Object obj) {
-        if(obj==null){
+        if (obj == null) {
             return false;
         }
-        if(obj instanceof Order){
-            Order other = (Order)obj;
-            return Objects.equals(this.sn,other.sn);
+        if (obj instanceof Order) {
+            Order other = (Order) obj;
+            return Objects.equals(this.sn, other.sn);
         }
         return super.equals(obj);
     }

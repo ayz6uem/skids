@@ -94,10 +94,11 @@ public class EquipChargeStatus {
             chargeStatus.setSoc(0d);
             chargeStatus.setStartTime(order.getStartTime());
             chargeStatus.setEndTime(order.getEndTime());
-            chargeStatus.setTotalPower(order.getPower());
-            chargeStatus.setElecMoney(order.getMoney());
-            chargeStatus.setTotalMoney(order.getMoney());
-            chargeStatus.setSeviceMoney(order.getMoney());
+            chargeStatus.setTotalPower(order.getPower().doubleValue());
+
+            chargeStatus.setElecMoney(order.getMoney().doubleValue());
+            chargeStatus.setSeviceMoney(order.getServiceMoney().doubleValue());
+            chargeStatus.setTotalMoney(order.getTotalMoney().doubleValue());
         }
 
         return chargeStatus;
