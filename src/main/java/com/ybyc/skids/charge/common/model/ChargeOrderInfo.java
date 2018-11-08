@@ -47,10 +47,10 @@ public class ChargeOrderInfo {
         orderInfo.setConnectorID(order.getConnectorId());
         orderInfo.setStartTime(order.getStartTime());
         orderInfo.setEndTime(order.getEndTime());
-        orderInfo.setTotalPower(order.getPower());
-        orderInfo.setTotalElecMoney(order.getMoney());
-        orderInfo.setTotalSeviceMoney(order.getMoney());
-        orderInfo.setTotalMoney(order.getMoney());
+        orderInfo.setTotalPower(order.getPower().doubleValue());
+        orderInfo.setTotalElecMoney(order.getMoney().doubleValue());
+        orderInfo.setTotalSeviceMoney(order.getMoney().doubleValue());
+        orderInfo.setTotalMoney(order.getMoney().doubleValue());
         orderInfo.setStopReason(0);
         orderInfo.setSumPeriod(0);
         return orderInfo;
