@@ -36,6 +36,9 @@ public class OrderService {
         //假设与桩通讯了5秒钟
         sleep(5);
 
+        if(Math.random() < 0.2){
+            order.setCurrent(0.05);
+        }
 
         ChargeActionResult actionResult = new ChargeActionResult();
         actionResult.setStartChargeSeq(sn);
